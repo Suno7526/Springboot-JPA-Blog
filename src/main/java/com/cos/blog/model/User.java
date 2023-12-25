@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-/* @DynamicInsert */ //inser시에
+/* @DynamicInsert */ //insert 시 null값 제외하고 insert
 public class User {
 
 	@Id // primary key
