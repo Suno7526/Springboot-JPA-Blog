@@ -11,7 +11,9 @@ import com.cos.blog.model.User;
 public class PrincipalDetail implements UserDetails {
 	private User user;
 
-	
+	public PrincipalDetail(User user) {
+		this.user = user;
+	}
 
 	@Override
 	public String getPassword() {

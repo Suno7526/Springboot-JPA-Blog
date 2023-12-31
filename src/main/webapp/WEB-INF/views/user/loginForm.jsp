@@ -12,8 +12,8 @@
 			<label for="password">Password</label> <input type="password" name="password"
 				class="form-control" placeholder="Enter password" id="password">
 		</div>
+		<button id="btn-login" class="btn btn-primary">로그인</button>
 	</form>
-	<button id="btn-login" class="btn btn-primary">로그인</button>
 </div>
 
 <%@ include file="../layout/footer.jsp"%>
