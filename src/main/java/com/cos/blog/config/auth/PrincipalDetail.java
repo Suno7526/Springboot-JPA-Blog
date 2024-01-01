@@ -11,7 +11,7 @@ import com.cos.blog.model.User;
 import lombok.Data;
 import lombok.Getter;
 
-@Data
+@Getter
 public class PrincipalDetail implements UserDetails {
 	private User user;
 
