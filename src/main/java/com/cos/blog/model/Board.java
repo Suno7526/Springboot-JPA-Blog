@@ -35,10 +35,9 @@ public class Board {
 	@Column(nullable =  false, length = 100)
 	private String title;
 	
-	@Lob // 대용량 데이터
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	
-	@ColumnDefault("0")
 	private int count; // 조회수
 	
 	@ManyToOne(fetch =  FetchType.EAGER)
