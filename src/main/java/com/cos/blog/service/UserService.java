@@ -14,23 +14,28 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	@Transactional
 	public void 회원가입(User user) {
-		String rawPassword =  user.getPassword();
-		String encPassword =  encoder.encode(rawPassword);
+		String rawPassword = user.getPassword();
+		String encPassword = encoder.encode(rawPassword);
 		user.setPassword(encPassword);
 		user.setRole(RoleType.USER);
 		userRepository.save(user);
 	}
 
-	/*
-	 * @Transactional(readOnly = true) public User 로그인(User user) { return
-	 * userRepository.findByUsernameAndPassword(user.getUsername(),
-	 * user.getPassword()); }
-	 */
+	@Transactional
+	public void 회원수정(User user) {
+		User persistance = userRepository.findById(user.getId()).orElseThrow(() -> {
+			return new IllegalArgumentException("회원찾기 실패");
+		});
+		String rawPassword = user.getPassword();
+		String encPassword = encoder.encode(rawPassword);
+		persistance.setPassword(encPassword);
+		persistance.setEmail(user.getEmail());
+	}
 
 }
