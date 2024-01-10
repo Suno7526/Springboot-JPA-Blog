@@ -72,82 +72,133 @@ public class UserController {
 				String.class
 				);
 		
+				/*
+				 * ObjectMapper objectMapper = new ObjectMapper(); OAuthToken oauthToken = null;
+				 * 
+				 * try { oauthToken = objectMapper.readValue(response.getBody(),
+				 * OAuthToken.class); } catch (JsonMappingException e) { e.printStackTrace(); }
+				 * catch (JsonProcessingException e) { e.printStackTrace(); }
+				 */
 		ObjectMapper objectMapper = new ObjectMapper();
-		OAuthToken oauthToken = null;
+        OAuthToken oAuthToken = null;
+
+        try {
+            oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 		
-		try {
-			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+		/* System.out.println("카카오 엑세스 토큰" + oauthToken.getAccess_token()); */
 		
-		System.out.println("카카오 엑세스 토큰" + oauthToken.getAccess_token());
+		/*
+		 * RestTemplate rt2 = new RestTemplate(); HttpHeaders headers2 = new
+		 * HttpHeaders();
+		 * 
+		 * headers2.add("Authorization","Bearer "+oauthToken.getAccess_token());
+		 * headers2.add("Content-type",
+		 * "application/x-www-form-urlencoded;charset=utf-8");
+		 * 
+		 * 
+		 * HttpEntity<MultiValueMap<String,String>> kakaoProfileRequest2 = new
+		 * HttpEntity<>(headers2);
+		 * 
+		 * ResponseEntity<String> response2 = rt2.exchange(
+		 * "https://kapi.kakao.com/v2/user/me", HttpMethod.POST, kakaoProfileRequest2,
+		 * String.class );
+		 */
+        
+        RestTemplate restTemplate2 = new RestTemplate();
+
+        //HttpHedaer 오브적트 생성
+        HttpHeaders headers2 = new HttpHeaders();
+
+        headers2.add("Authorization", "Bearer " + oAuthToken.getAccess_token());
+        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+
+        //HttpHeader 와 HttpBody를 하나의 오브젝트에 담기
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest =
+                new HttpEntity<>(headers2);
+
+        //Http 요청하기 post방식 -> response 변수의 응답받음
+
+        ResponseEntity<String> response2 = restTemplate2.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
 		
-		RestTemplate rt2 = new RestTemplate();
-		HttpHeaders headers2 = new HttpHeaders();
+		/*
+		 * ObjectMapper objectMapper2 = new ObjectMapper(); KakaoProfile kakaoProfile =
+		 * null; try { kakaoProfile = objectMapper2.readValue(response2.getBody(),
+		 * KakaoProfile.class); } catch (JsonMappingException e) { e.printStackTrace();
+		 * } catch (JsonProcessingException e) { e.printStackTrace(); }
+		 * 
+		 * System.out.println("카카오 아이디(번호) : " +kakaoProfile.getId());
+		 * System.out.println("카카오 이메일 : " +"showme314@naver.com");
+		 * 
+		 * System.out.println("유저네임 : "+"showme314@naver.com"+"_"+kakaoProfile.getId());
+		 * System.out.println("블로그서버 이메일: "+"showme314@naver.com");
+		 * System.out.println("블로그서버 패스워드 : "+ cosKey);
+		 */
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+
+        try {
+            kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("카카오 정보 (아이디번호): " + kakaoProfile.getId());
+        System.out.println("카카오 정보 (이메일) : " + "showme314@naver.com");
 		
-		headers2.add("Authorization","Bearer "+oauthToken.getAccess_token());
-		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-		
-		
-		HttpEntity<MultiValueMap<String,String>> kakaoProfileRequest2 =
-				new HttpEntity<>(headers2);
-		
-		ResponseEntity<String> response2 = rt2.exchange(
-				"https://kapi.kakao.com/v2/user/me",
-				HttpMethod.POST,
-				kakaoProfileRequest2,
-				String.class
-				);
-		
-		ObjectMapper objectMapper2 = new ObjectMapper();
-		KakaoProfile kakaoProfile = null;
-		try {
-			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("카카오 아이디(번호) : " +kakaoProfile.getId());
-		System.out.println("카카오 이메일 : " +"showme314@naver.com");
-		
-		System.out.println("유저네임 : "+"showme314@naver.com"+"_"+kakaoProfile.getId());
-		System.out.println("블로그서버 이메일: "+"showme314@naver.com");
-		System.out.println("블로그서버 패스워드 : "+ cosKey);
-		
-		User kakaoUser = User.builder()
-				.username("showme314@naver.com"	+"_"+kakaoProfile.getId())
-				.password(cosKey)
-				.email("showme314@naver.com")
-				.build();
+		/*
+		 * User kakaoUser = User.builder() .username("showme314@naver.com"
+		 * +"_"+kakaoProfile.getId()) .password(cosKey) .email("showme314@naver.com")
+		 * .build();
+		 */
+        User kakaoUser = User.builder()
+                .username("showme314@naver.com" + "_" + kakaoProfile.getId())
+                .password(cosKey)
+                .email("showme314@naver.com")
+                .build();
 		
 		System.out.println("123");
 		
+		/* User originUser = userService.회원찾기(kakaoUser.getUsername()); */
 		User originUser = userService.회원찾기(kakaoUser.getUsername());
 		
 		System.out.println("1234");
 		
-		if(originUser.getUsername() == null) {
-			System.out.println("12345");
-			userService.회원가입(kakaoUser);
-		}
+		/*
+		 * if(originUser.getUsername() == null) { System.out.println("12345");
+		 * userService.회원가입(kakaoUser); }
+		 */
+		
+		if (originUser.getUsername() == null) {
+            userService.회원가입(kakaoUser);
+        }
 		
 		System.out.println("123456");
 		
-		try {
-		    Authentication authentication = authenticationManager.authenticate(
-		        new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
-		    SecurityContextHolder.getContext().setAuthentication(authentication);
-		    System.out.println("sucess");
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    System.out.println("fail");
-		}
+		/*
+		 * try { Authentication authentication = authenticationManager.authenticate( new
+		 * UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
+		 * SecurityContextHolder.getContext().setAuthentication(authentication);
+		 * System.out.println("sucess"); } catch (Exception e) { e.printStackTrace();
+		 * System.out.println("fail"); }
+		 */
 		
+		Authentication authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        
 		return "redirect:/";
 	}
 	

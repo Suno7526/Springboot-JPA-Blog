@@ -19,22 +19,21 @@ import com.cos.blog.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @RestController
 public class UserApiController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private HttpSession session;
 
 	@Autowired
 	private BCryptPasswordEncoder encode;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {
 		System.out.println("UserApiController : save");
@@ -42,12 +41,15 @@ public class UserApiController {
 		userService.회원가입(user);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
-	
+
 	@PutMapping("/user")
-	public ResponseDto<Integer> update(@RequestBody User user){
+	public ResponseDto<Integer> update(@RequestBody User user) {
 		userService.회원수정(user);
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 }

@@ -51,7 +51,8 @@ public class SecurityConfig {
                             ).permitAll()
                             .requestMatchers(
                                     AntPathRequestMatcher.antMatcher("/")
-                            ).permitAll().anyRequest().authenticated()
+                            ).permitAll()
+                            .anyRequest().authenticated()
             ).formLogin(login -> login
             		.loginPage("/auth/loginForm")
             		.loginProcessingUrl("/auth/loginProc")

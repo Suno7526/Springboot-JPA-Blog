@@ -1,6 +1,10 @@
 package com.cos.blog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +22,19 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
 	@Transactional(readOnly = true)
-	public User 회원찾기(String username) {
-		
-		User user = userRepository.findByUsername(username).orElseGet(()->{
-			return new User();
-		});
-		return user;
-	}
+    public User 회원찾기(String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseGet(()->{
+                    return new User();
+                });
+
+        return user;
+    }
 
 	@Transactional
 	public void 회원가입(User user) {
@@ -38,9 +47,7 @@ public class UserService {
 
 	@Transactional
 	public void 회원수정(User user) {
-		User persistance = userRepository.findById(user.getId()).orElseThrow(() -> {
-			return new IllegalArgumentException("회원찾기 실패");
-		});
+		User persistance = userRepository.findById(user.getId()).orElseThrow();
 		String rawPassword = user.getPassword();
 		String encPassword = encoder.encode(rawPassword);
 		persistance.setPassword(encPassword);
