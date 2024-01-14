@@ -6,7 +6,7 @@
 <div class="container">
 
 	<c:forEach var="board" items="${boards.content}">
-		<div class="card m-2">
+		<div class="card m-2" style="border: solid 2px rgb(56, 56, 56); border-radius: 10px; height: 120px; background-color: rgb(235, 235, 235);">
 			<div class="card-body">
 				<h4 class="card-title">${board.title}</h4>
 				<a href="/board/${board.id}" class="btn btn-primary">상세보기</a>
