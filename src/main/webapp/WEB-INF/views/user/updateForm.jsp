@@ -11,11 +11,11 @@
             <input type="text" value="${principal.user.username}" class="form-control" id="username" placeholder="Enter ID" name="username" readonly>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">비밀번호</label>
             <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
         </div>
         <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">이메일</label>
             <input type="email" value="${principal.user.email}" class="form-control" id="email" placeholder="Enter Email" name="email">
         </div>
 
