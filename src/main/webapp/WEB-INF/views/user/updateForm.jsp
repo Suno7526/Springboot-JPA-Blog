@@ -21,7 +21,7 @@
 
     </form>
 
-    <button id="btn-update" class="btn btn-primary">Update</button>
+    <button id="btn-update" class="btn btn-primary">수정하기</button>
 
 </div>
 <br>

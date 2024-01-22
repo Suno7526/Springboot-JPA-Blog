@@ -21,6 +21,7 @@ public class KakaoProfile {
         public Boolean email_needs_agreement;
         public Boolean is_email_valid;
         public Boolean is_email_verified;;*/
+    	
         public String email;
 
     }

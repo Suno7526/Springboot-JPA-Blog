@@ -49,9 +49,6 @@ public class SecurityConfig {
                             .requestMatchers(
                                     AntPathRequestMatcher.antMatcher("/**")
                             ).permitAll()
-                            .requestMatchers(
-                                    AntPathRequestMatcher.antMatcher("/")
-                            ).permitAll()
                             .anyRequest().authenticated()
             ).formLogin(login -> login
             		.loginPage("/auth/loginForm")
