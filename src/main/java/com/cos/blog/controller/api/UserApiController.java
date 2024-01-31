@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,19 +16,11 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 public class UserApiController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private HttpSession session;
-
-	@Autowired
-	private BCryptPasswordEncoder encode;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;

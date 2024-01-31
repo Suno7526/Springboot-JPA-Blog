@@ -33,11 +33,19 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 
+		<!-- JSTL -->
+		<!--<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>-->
 		
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
 			</dependency>
+			
+		<!-- JSTL -->	
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
