@@ -6,7 +6,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.UserRepository;
 
@@ -18,9 +17,6 @@ public class UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	@Transactional(readOnly = true)
 	public User 회원찾기(String username) {
