@@ -1,0 +1,1 @@
+importScripts("https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_4240a1281be345b3b9deac97b4b08835/obj-gimesee/gimesee01-prod/gimesee01-home01-main01/webpush/service-worker.js");
